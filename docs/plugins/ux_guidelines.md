@@ -1,27 +1,6 @@
 # User Experience Guidelines
 
-## Related information
-
-- [CZI workshop](https://chanzuckerberg.github.io/napari-plugin-accel-workshops/workshops/february.html)
-Related [workshop Lia slides](https://docs.google.com/presentation/d/10pxnwvBBb1rYV-LEWgmn5b2n9CK93-Qc_U_CEKUD5jI/edit#slide=id.g1197662a91c_0_66) and [isabela slides](https://docs.google.com/presentation/d/1JeDCvSYxXXDBMGdtC32rQSi5TJawiZEFW-A1wqHRHhU/edit#slide=id.g11d41ea185c_0_459).
-
-
-## Layout
-
-- Overview of UX
-- Consitency with napari
-- Menus and tooltips
-- Containers and tabs
-
-## Guiding principles
-
-- Minimise popups
-- Minimise the use of extra windows.
-
-
-## Overview of UX
-
-Briefly, accounting for user experience (UX) is accounting for how user interacts with your napari package.
+Accounting for user experience (UX) is handling how users interact with your napari package.
 It is important to keep in mind that what you have designed for is not necessarily how users will try to interact with your package.
 Achieving a good user experience will facilatate ease of use of your package and user efficiency, improving the overall perception of your package.
 This page includes some overall considerations related to achieving a smooth UX in addtion to specific napari tips.
@@ -33,9 +12,9 @@ Some important design considerations are:
 
 1. **Who** is your target user?
 2. **What** problems are you solving or enabling the user to do, what is the user outcome?
-3. **Wow** this solution is unique and impactful to your users, what sets your package apart from other similar packages?
+3. **Wow** factor that makes your solution unique and impactful to your users, what sets your package apart from other similar packages?
 
-### Getting feedback
+### Questions to ask yourself
 
 Some questions to ask yourself are:
 
@@ -48,35 +27,37 @@ Some questions to ask yourself are:
 - What sets your package apart, why use it over other options to solve those challenges.
 - Show your package to potential users and iterate with their feedback.
 
+### Getting user feedback
+
+CZI workshop
+
 ## Widget design considerations
 
-TODO in progress with examples for the below.
-
 A well designed widget enables your users to take full advantage of your widget functionality.
+In addition to following the general design considerations above, there are specific considerations in creating a widget that can be helpful.
 
 ### Group similar actions together in your widget
 Following the [Gestalt principles](https://www.toptal.com/designers/ui/gestalt-principles-of-design#:~:text=There%20are%20six%20individual%20principles,order%20(also%20called%20pr%C3%A4gnanz).), we naturally perceive nearby objects to be similar.
 As such, grouping similar actions together enables a natural interation.
 Containers and tabs can used to further group actions together and lessen clutter.
-TODO example in progress.
-
 Keep in mind that the napari viewer is configurable. Users can float (or popout) your widget windows, move them around, organise them into containers with tabs etc. So try to keep pieces of functionality well grouped together.
 
-### Add tooltips
+### Add tooltips to widget items
 
 Adding tooltips to explain paramters allows users to find the information if they need it, but it won't take up unnecessary space.
-TODO example with magicgui and QWdiget ready.
+TODO
 
-### Magicgui
+### Choose the correct UI element
 
-There are standarised options (kind of) for different input styles, and using magicgui can make this process much simpler.
+Not sure on this one, but e.g. a check box for 2 or 3 items, radio button for multiple options (maybe max 4) and a drop down list otherwise.
 
-## NB I think there is a push towards supporting more with plugins
+## Related workshops
 
-When that happens, I think this could be a very valuable space to desribe the UI sections (menu bar, layers, console etc.) - and what we might expect could modify each of these. Some does and don'ts style tips.
+- [CZI workshop](https://chanzuckerberg.github.io/napari-plugin-accel-workshops/workshops/february.html)
+Related [workshop Lia slides](https://docs.google.com/presentation/d/10pxnwvBBb1rYV-LEWgmn5b2n9CK93-Qc_U_CEKUD5jI/edit#slide=id.g1197662a91c_0_66) and [isabela slides](https://docs.google.com/presentation/d/1JeDCvSYxXXDBMGdtC32rQSi5TJawiZEFW-A1wqHRHhU/edit#slide=id.g11d41ea185c_0_459). example with magicgui and QWdiget ready.
 
-When the command palette is added the list expands etc.
+<!-- ## Plugin modifiable sections
 
-### Preferences
+If UI elements become modifiable by plugins (e.g. layer list or bottom bar), this could be a space to desribe the UI sectionsand what we might expect could modify each of these.
 
-Some information about napari preferences.
+If the command palette is added the list expands etc. -->
