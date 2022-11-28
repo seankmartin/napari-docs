@@ -14,24 +14,18 @@ Some important design considerations are:
 2. **What** problems are you solving or enabling the user to do, what is the user outcome?
 3. **Wow** factor that makes your solution unique and impactful to your users, what sets your package apart from other similar packages?
 
-### Questions to ask yourself
-
-Some questions to ask yourself are:
+### Further considerations
 
 - Where might users get confused or break something?
 - Does our plugin description or tutorial include all necessary information?
 - Have we chosen the best GUI to help users best understand the plugin functionality?
 - What other use cases might our plugin have?
 
-- Assess the user journey in using your package to overcome these challenges.
-- What sets your package apart, why use it over other options to solve those challenges.
-- Show your package to potential users and iterate with their feedback.
-
 ### Getting user feedback
 
-CZI workshop
+An important step in addition to assessing the user journey in using your package to overcome challenges, is to show your package to users and iterate with their feedback. See the CZI workshop for more information.
 
-## Widget design considerations
+## napari Widget design considerations
 
 A well designed widget enables your users to take full advantage of your widget functionality.
 In addition to following the general design considerations above, there are specific considerations in creating a widget that can be helpful.
@@ -41,6 +35,133 @@ Following the [Gestalt principles](https://www.toptal.com/designers/ui/gestalt-p
 As such, grouping similar actions together enables a natural interation.
 Containers and tabs can used to further group actions together and lessen clutter.
 Keep in mind that the napari viewer is configurable. Users can float (or popout) your widget windows, move them around, organise them into containers with tabs etc. So try to keep pieces of functionality well grouped together.
+
+This is achievable in both `magicgui` and `Qt`, in different manners.
+For `magicgui` the primary method is to create multiple [containers](https://pyapp-kit.github.io/magicgui/usage/_autosummary/magicgui.widgets.Container.html#magicgui.widgets.Container) representing the grouped actions, and then combine these subcontainers together in one main widget container.
+In `Qt`, there are multiple options, but [tabbed widgets](https://doc.qt.io/qtforpython-6/PySide6/QtWidgets/QTabWidget.html?highlight=qtabwidget) and [boxed wigets](https://doc.qt.io/qtforpython-6/PySide6/QtWidgets/QGroupBox.html?highlight=qgroupbox) are two great options.
+
+```{note}
+If the behaviour of the groups of actions in a single widget are independent from eachother, then creating multiple widgets instead is generally prefable over creating a single widget with grouped actions.
+```
+
+### Grouped widget example
+
+````{tabbed} magicgui
+
+```Python
+from magicgui.widgets import Container, PushButton, FileEdit, FloatSlider
+
+class MagicWidgetWithContainers(Container):
+    def __init__(self, *args, **kwargs) -> None:
+        super().__init__(*args, **kwargs)
+
+        # 1. Setup container
+        file_select = FileEdit(name="file_select", label="Input file", mode="r")
+        setup_container = Container(name="setup", label="Setup", widgets=[file_select])
+
+        # 2. Analysis container
+        sigma_slider = FloatSlider(label="sigma")
+        phi_slider = FloatSlider(label="phi")
+        analysis_container = Container(
+            label="Parameters", widgets=[sigma_slider, phi_slider]
+        )
+
+        # 3. Run container
+        save_button = PushButton(name="save", label="Save parameters")
+        run_button = PushButton(name="run", label="Run analysis")
+        run_container = Container(
+            widgets=[save_button, run_button], layout="horizontal", labels=False
+        )
+
+        # Add the subcontainers to main container and link functionality
+        self.extend((setup_container, analysis_container, run_container))
+        run_button.clicked.connect(
+            lambda: print(f"Running on {self['setup']['file_select'].value}")
+        )
+
+if __name__ == "__main__":
+    viewer = napari.Viewer()
+    viewer.window.add_dock_widget(
+        MagicWidgetWithContainers(labels=True), name="Example Groups"
+    )
+    viewer.show(block=True)
+```
+````
+
+````{tabbed} pyqt
+
+```Python
+from qtpy.QtWidgets import (
+    QWidget,
+    QLabel,
+    QTabWidget,
+    QLineEdit,
+    QPushButton,
+    QVBoxLayout,
+    QFileDialog,
+    QHBoxLayout,
+    QFormLayout,
+    QDoubleSpinBox,
+    QGroupBox,
+)
+
+class MyGroupedQWidget(QWidget):
+    def __init__(self, use_tabs: bool = True, *args, **kwargs) -> None:
+        super().__init__(*args, **kwargs)
+        self.setLayout(QVBoxLayout())
+
+        # 1. Setup page
+        setup_page = QWidget(self) if use_tabs else QGroupBox("Setup", self)
+        setup_page.setLayout(QHBoxLayout())
+        setup_page.layout().addWidget(QLabel("Select file to load"))
+        self._file_select_text = QLineEdit(self)
+        setup_page.layout().addWidget(self._file_select_text)
+        self._browse_button = QPushButton("Browse")
+        setup_page.layout().addWidget(self._browse_button)
+        self._browse_button.clicked.connect(self.browse)
+
+        # 2. Analysis page
+        analysis_page = QWidget(self) if use_tabs else QGroupBox("Parameters", self)
+        analysis_page.setLayout(QFormLayout())
+        analysis_page.layout().addRow("sigma", QDoubleSpinBox(self))
+        analysis_page.layout().addRow("phi", QDoubleSpinBox(self))
+
+        # Add setup and analysis pages
+        if use_tabs:
+            tab = QTabWidget(self)
+            tab.addTab(setup_page, "Setup")
+            tab.addTab(analysis_page, "Parameters")
+            self.layout().addWidget(tab)
+        else:
+            self.layout().addWidget(setup_page)
+            self.layout().addWidget(analysis_page)
+
+        # 3. Add run box
+        run_box = QWidget(self)
+        run_box.setLayout(QHBoxLayout())
+        run_box.layout().addWidget(QPushButton("Save"))
+        self._run_button = QPushButton("Run")
+        self._run_button.clicked.connect(self.run)
+        run_box.layout().addWidget(self._run_button)
+        self.layout().addWidget(run_box)
+
+    def run(self):
+        print(f"Running on {self._file_select_text.text()}")
+
+    def browse(self):
+        filename, _ = QFileDialog.getOpenFileName(self, "Choose a file to run on")
+        if filename != "":
+            self._file_select_text.setText(filename)
+
+if __name__ == "__main__":
+    viewer = napari.Viewer()
+    viewer.window.add_dock_widget(MyGroupedQWidget(), name="Example tabs", tabify=True)
+    viewer.window.add_dock_widget(
+        MyGroupedQWidget(use_tabs=False), name="Example boxes", tabify=True
+    )
+    viewer.show(block=True)
+```
+````
 
 ### Add tooltips to widget items
 
