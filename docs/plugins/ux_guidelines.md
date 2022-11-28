@@ -25,7 +25,7 @@ Some important design considerations are:
 
 An important step in addition to assessing the user journey in using your package to overcome challenges, is to show your package to users and iterate with their feedback. See the CZI workshop for more information.
 
-## napari Widget design considerations
+## napari widget design considerations
 
 A well designed widget enables your users to take full advantage of your widget functionality.
 In addition to following the general design considerations above, there are specific considerations in creating a widget that can be helpful.
@@ -165,12 +165,46 @@ if __name__ == "__main__":
 
 ### Add tooltips to widget items
 
-Adding tooltips to explain paramters allows users to find the information if they need it, but it won't take up unnecessary space.
-TODO
+Adding tooltips to explain parameters allows users to find the information if they need it, but it won't take up unnecessary space.
+Tooltips are shown when the user hovers over the UI element and provides further context.
+
+````tabbed magicgui
+```
+# 1. decorator
+
+# 2. direct widget creation
+```
+````
+
+````tabbed pyqt
+```
+# Generaly setToolTip suffices
+
+# In other cases, QToolButton with dialog can be nice
+# Usually for long text explanations
+
+```
+````
 
 ### Choose the correct UI element
 
-Not sure on this one, but e.g. a check box for 2 or 3 items, radio button for multiple options (maybe max 4) and a drop down list otherwise.
+Qt for Python is stacked with a myriad of [widget types](https://doc.qt.io/qtforpython/PySide6/QtWidgets/index.html#list-of-classes).
+Choosing the correct widget type can be quite complex.
+For instance, in the case of a multiple choice option, the correct UI element largely depends on the number of available choices, and if the choices are mutually exclusive.
+A reasonable guide here would be:
+
+1. For a single choice with 2 options, use a [check box](https://doc.qt.io/qtforpython/PySide6/QtWidgets/QCheckBox.html?highlight=qcheckbox).
+2. For more than 2 options but less than 5 mutually exclusive options use [radio buttons](https://doc.qt.io/qtforpython/PySide6/QtWidgets/QRadioButton.html).
+3. For more than 4 mutually exclusive options use a [dropdown menu](https://doc.qt.io/qtforpython/PySide6/QtWidgets/QComboBox.html?highlight=dropdown).
+4. For non-mutually exclusive options, use [grouped check boxes](https://doc.qt.io/qtforpython/PySide6/QtWidgets/QButtonGroup.html?highlight=qbuttongroup#detailed-description).
+
+Magicgui can simplify making this decision, as it parses the names of your function parameters and types to infer the correct UI element to use (by magic).
+
+```Python
+
+# TODO an example here showing the different magicgui parsing
+
+```
 
 ## Related workshops
 
