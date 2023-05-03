@@ -1,3 +1,21 @@
+# Detect underlying system.
+ifeq ($(OS),Windows_NT)
+	detected_OS := Windows
+else
+	detected_OS := $(shell sh -c 'uname -s 2>/dev/null || echo not')
+endif
+
+export detected_OS
+
+# Set proper RM on Windows.
+ifeq ($(detected_OS),Windows)
+	RM=del /q /f
+else
+	RM=rm -rf
+endif
+
+export RM
+
 .PHONY: docs clean
 
 SPHINXOPTS =
@@ -15,10 +33,10 @@ docs_dir := $(current_dir)docs
 clean:
 	echo clean
 	echo $(current_dir)
-	rm -rf $(docs_dir)/_build/
-	rm -rf $(docs_dir)/api/napari*.rst
-	rm -rf $(docs_dir)/gallery/*
-	rm -rf $(docs_dir)/_tags
+	$(RM) $(docs_dir)/_build/
+	$(RM) $(docs_dir)/api/napari*.rst
+	$(RM) $(docs_dir)/gallery/*
+	$(RM) $(docs_dir)/_tags
 
 docs-install:
 	python -m pip install -qr $(current_dir)requirements.txt
