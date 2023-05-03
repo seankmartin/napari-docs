@@ -7,8 +7,8 @@ import platform
 import sys
 from pathlib import Path
 
-docs = Path(__file__).parent.parent.absolute()
-npe = docs.parent.absolute() / 'npe2'
+DOCS = Path(__file__).parent.parent.absolute()
+NPE2 = DOCS.parent.absolute() / 'npe2'
 
 def prep_npe2():
     #   some plugin docs live in npe2 for testing purposes
@@ -19,12 +19,12 @@ def prep_npe2():
     else:
         delete = 'rm -rf'
 
-    render = str(npe / '_docs' / 'render.py')
-    if npe.exists():
-        check_call(f"{delete} {npe}".split())
-    check_call(f"git clone https://github.com/napari/npe2 {npe}".split())
-    check_call([sys.executable, render, str(docs / 'plugins')])
-    check_call(f"{delete} {npe}".split())
+    render = str(NPE2 / '_docs' / 'render.py')
+    if NPE2.exists():
+        check_call(f"{delete} {NPE2}".split())
+    check_call(f"git clone https://github.com/napari/npe2 {NPE2}".split())
+    check_call([sys.executable, render, str(DOCS / 'plugins')])
+    check_call(f"{delete} {NPE2}".split())
 
 
 def main():
