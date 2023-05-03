@@ -41,7 +41,7 @@ clean:
 	$(RMDIR) $(docs_dir)$(SEP)_build$(SEP)
 	$(RMFILES) $(docs_dir)$(SEP)api$(SEP)napari*.rst
 	$(RMFILES) $(docs_dir)$(SEP)gallery$(SEP)*
-	$(RMFILES) $(docs_dir)$(SEP)_tags
+	$(RMDIR) $(docs_dir)$(SEP)_tags$(SEP)
 
 docs-install:
 	python -m pip install -qr $(current_dir)requirements.txt
