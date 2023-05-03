@@ -3,20 +3,28 @@
 Note: make no assumptions about the working directory
 from which this script will be called.
 """
+import platform
 import sys
 from pathlib import Path
 
-DOCS = Path(__file__).parent.parent.absolute()
-NPE = DOCS.parent.absolute() / 'npe2'
+docs = Path(__file__).parent.parent.absolute()
+npe = docs.parent.absolute() / 'npe2'
 
 def prep_npe2():
     #   some plugin docs live in npe2 for testing purposes
     from subprocess import check_call
 
-    check_call(f"rm -rf {NPE}".split())
-    check_call(f"git clone https://github.com/napari/npe2 {NPE}".split())
-    check_call([sys.executable, f"{NPE}/_docs/render.py", DOCS / 'plugins'])
-    check_call(f"rm -rf {NPE}".split())
+    if platform.system() == 'Windows':
+        delete = 'cmd /c rmdir /s /q'
+    else:
+        delete = 'rm -rf'
+
+    render = str(npe / '_docs' / 'render.py')
+    if npe.exists():
+        check_call(f"{delete} {npe}".split())
+    check_call(f"git clone https://github.com/napari/npe2 {npe}".split())
+    check_call([sys.executable, render, str(docs / 'plugins')])
+    check_call(f"{delete} {npe}".split())
 
 
 def main():
