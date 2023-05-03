@@ -49,7 +49,7 @@ docs-install:
 prep-docs:
 	python $(docs_dir)$(SEP)_scripts$(SEP)prep_docs.py
 
-docs-build: prep_docs
+docs-build: prep-docs
 	${ENV_SET} sphinx-build -b html docs$(SEP) docs$(SEP)_build -D sphinx_gallery_conf.examples_dirs=$(GALLERY_PATH) $(SPHINXOPTS)
 
 docs-xvfb: prep-docs
