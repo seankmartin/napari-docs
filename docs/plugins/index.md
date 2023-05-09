@@ -1,69 +1,45 @@
-(plugins-index)=
 # Plugins
 
+Plugins are a powerful way to extend the functionality of napari and share these extensions with the community.
+While scripts and widgets can also be used to extend napari, plugins offer the most convenient method for publicly sharing additional features.
+The following resources are designed to assist you in comprehending the usage of napari plugins and guiding you through the process of creating your own plugins for napari.
 
-```{note}
-These pages describe the process of **building** a plugin.
+::::{grid}
+:::{grid-item-card} Getting started
 
-If you are looking to **use** published plugins, see the
-[guide on installing plugins](find-and-install-plugins), or head to the [napari hub][napari_hub] to
-search for plugins.
-```
+Introduction to napari plugins, what they can provide,
+how to install them, and where to get support.
+:::
 
-Plugins allow developers to customize and extend napari.  This includes
+:::{grid-item-card} Tutorials
 
-- Adding file format support with [readers] and [writers]
-- Adding custom [widgets] and user interface elements
-- Providing [sample data][sample_data]
-- Changing the look of napari with a color [theme]
+The tutorials provide examples of how to find and use plugins,
+and how to create your own.
+:::
+::::
 
-Here you can find:
+::::{grid}
+:::{grid-item-card} Building a plugin
+In depth guides to build a plugin for napari.
 
-- How to [build, test and publish a plugin](how-to-build-a-plugin).
-- Where to find [guides](./guides) to help get you started.
-- [Best practices](./best_practices) when developing plugins.
+:::
 
-```{admonition} Introducing npe2
-:class: important
+:::{grid-item-card} User experience guidlines
 
-We introduced a new plugin engine [`npe2`][npe2] in December 2021.
+Guidelines for creating a plugin that is easy to use and understand,
+and is consistent with the rest of napari.
+::::
 
-Unless otherwise stated, most of the documentation herein pertains
-to the new npe2 format (which uses a static `napari.yaml` manifest)
+::::{grid}
+:::{grid-item-card} Testing and publishing
 
-Plugins targeting the first generation `napari-plugin-engine` 
-(using `@napari_hook_implementation` decorators) will
-continue to work for at least the first half of 2022, but we
-recommend migrating to `npe2`. See the
-[migration guide](npe2-migration-guide) for details.
-```
+How to test your plugin works and how to publish it to PyPI,
+along with some tips for making your plugin easy to find.
+:::
 
-(how-to-build-a-plugin)=
-## How to build plugins
+:::{grid-item-card} Technical references
 
-If you're just getting started with napari plugins, try our
-[Your First Plugin](./first_plugin) tutorial.
-
-For a list of all available contribution points and specifications,
-see the [Contributions reference](./contributions)
-
-If you're ready to publish your plugin, see [Test and deploy](./test_deploy)
-
-For special considerations when building a napari plugin, see
-{ref}`best-practices`.
-
-## Looking for help?
-
-If you have questions, try asking on the [zulip chat][napari_zulip].
-Submit issues to the [napari github repository][napari_issues].
-
-[npe1]: https://github.com/napari/napari-plugin-engine
-[npe2]: https://github.com/napari/npe2
-[napari_issues]: https://github.com/napari/napari/issues/new/choose
-[napari_zulip]: https://napari.zulipchat.com/
-[napari_hub]: https://napari-hub.org
-[readers]: contributions-readers
-[writers]: contributions-writers
-[widgets]: contributions-widgets
-[sample_data]: contributions-sample-data
-[theme]: contributions-themes
+Technical references for the plugin system and the plugin API
+and guides to convert from first generation plugins to npe2.
+:::
+::::

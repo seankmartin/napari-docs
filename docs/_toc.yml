@@ -75,24 +75,54 @@ subtrees:
   - file: plugins/index
     subtrees:
     - entries:
-      - file: plugins/find_and_install_plugin
-      - file: plugins/first_plugin
-      - file: plugins/manifest
-      - file: plugins/contributions
-      - file: plugins/guides
-      - file: plugins/test_deploy
-      - file: plugins/best_practices
-      - file: plugins/debug_plugins
-      - file: plugins/npe2_migration_guide
-      - file: plugins/npe1
-      - file: plugins/testing_workshop_docs/index
+      - file: plugins/getting_started/index
         subtrees:
         - entries:
-          - file: plugins/testing_workshop_docs/1-pythons-assert-keyword
-          - file: plugins/testing_workshop_docs/2-pytest-testing-frameworks
-          - file: plugins/testing_workshop_docs/3-readers-and-fixtures
-          - file: plugins/testing_workshop_docs/4-test-coverage
-          - file: plugins/testing_workshop_docs/testing-resources
+          - file: plugins/getting_started/finding_and_installing_plugins
+          - file: plugins/getting_started/what_plugins_can_provide
+          - file: plugins/getting_started/how_to_use_plugins
+          - file: plugins/getting_started/getting_support_for_plugins
+      - file: plugins/tutorials/index
+        subtrees:
+        - entries:
+          - file: plugins/tutorials/filtering_plugins_on_napari_hub
+          - file: plugins/tutorials/using_plugins_for_cell_segmentation
+          - file: plugins/tutorials/converting_a_napari_script_into_a_plugin
+          - file: plugins/tutorials/building_a_full_plugin
+      - file: plugins/building_a_plugin/index
+        subtrees:
+        - entries:
+          - file: plugins/building_a_plugin/your_first_plugin
+          - file: plugins/building_a_plugin/plugin_anatomy
+          - file: plugins/building_a_plugin/plugin_contributions
+          - file: plugins/building_a_plugin/key_concepts_for_plugins
+          - file: plugins/building_a_plugin/debugging_during_plugin_development
+          - file: plugins/building_a_plugin/best_practices
+      - file: plugins/user_experience_guidelines/index
+        subtrees:
+        - entries:
+          - file: plugins/user_experience_guidelines/overview_of_user_experience
+          - file: plugins/user_experience_guidelines/consistency_with_napari
+          - file: plugins/user_experience_guidelines/menus_and_tooltips
+          - file: plugins/user_experience_guidelines/containers_and_tabs
+      - file: plugins/testing_and_publishing/index
+        subtrees:
+        - entries:
+          - file: plugins/testing_and_publishing/testing_guidelines
+          - file: plugins/testing_and_publishing/describing_and_categorising_your_plugin
+          - file: plugins/testing_and_publishing/setting_up_the_napari_hub_plugin_preview_page
+          - file: plugins/testing_and_publishing/enhance_your_plugins_reach_and_demonstrate_quality
+      - file: plugins/advanced_topics/index
+        subtrees:
+        - entries:
+          - file: plugins/advanced_topics/migration_to_npe2
+          - file: plugins/advanced_topics/first_generation_plugins
+      - file: plugins/technical_references/index
+        subtrees:
+        - entries:
+          - file: plugins/technical_references/plugin_contributions_reference
+          - file: plugins/technical_references/plugin_manifest_reference
+          - file: plugins/technical_references/pypi_and_napari_hub_metadata_linking_reference
   - file: community/index
     subtrees:
     - titlesonly: True

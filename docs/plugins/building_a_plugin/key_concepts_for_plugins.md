@@ -1,0 +1,1 @@
+# Key concepts for plugins
