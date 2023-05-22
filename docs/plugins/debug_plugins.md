@@ -214,12 +214,7 @@ Below is an example of establishing debug messages and logs in your code and vie
 ```Python
 import logging
 import sys
-from napari.utils.notifications import (
-    notification_manager,
-    Notification,
-    NotificationSeverity,
-    show_console_notification,
-)
+from napari.utils.notifications import show_debug
 
 my_plugin_logger = logging.getLogger("napari_simple_reload")
 stdout_handler = logging.StreamHandler(sys.stderr)
@@ -231,18 +226,6 @@ stdout_handler.setFormatter(
 )
 my_plugin_logger.addHandler(stdout_handler)
 my_plugin_logger.setLevel(logging.WARNING)
-
-def show_debug(message: str):
-    """
-    Show a debug message in the notification manager.
-    """
-    notification_ = Notification(
-        message, severity=NotificationSeverity.DEBUG)
-    # Show message in the console only
-    show_console_notification(notification_)
-    # Show message in console and the napari GUI
-    notification_manager.dispatch(notification_)
-    # Control level of shown messages via napari preferences
 
 def example(input_string: str) -> str:
     output_string = (
