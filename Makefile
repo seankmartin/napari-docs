@@ -12,7 +12,7 @@ mkfile_path := $(abspath $(lastword $(MAKEFILE_LIST)))
 current_dir := $(dir $(mkfile_path))
 docs_dir := $(current_dir)docs
 
-ifeq ($(findstring a,$(docs_dir)),)
+ifeq ($(findstring ,$(docs_dir)),)
 	has_space := false
 else
 	has_space := true
