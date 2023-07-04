@@ -11,19 +11,20 @@ endif
 mkfile_path := $(abspath $(lastword $(MAKEFILE_LIST)))
 current_dir := $(dir $(mkfile_path))
 docs_dir := $(current_dir)docs
-space := $(null) $(null)
 
+ifeq ($(findstring a,$(docs_dir)),)
+	has_space := false
+else
+	has_space := true
+endif
 
 clean:
-	ifneq (,$(findstring $(space),$(docs_dir)))
-		$(error "The path to the docs directory contains spaces. Please move the napari repository to a path without spaces.")
-	endif
-	echo clean
+	if $(has_space) ; then echo "Error: makefile path has a space" ; exit 1 ; fi
 	echo $(current_dir)
-	ls -a $(docs_dir)/_build/
-	ls -a $(docs_dir)/api/napari*.rst
-	ls -a $(docs_dir)/gallery/*
-	ls -a $(docs_dir)/_tags
+	rm -rf $(docs_dir)/_build/
+	rm -rf $(docs_dir)/api/napari*.rst
+	rm -rf $(docs_dir)/gallery/*
+	rm -rf $(docs_dir)/_tags
 
 docs-install:
 	python -m pip install -qr $(current_dir)requirements.txt
